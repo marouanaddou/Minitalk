@@ -1,51 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_print_digit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 13:09:35 by maddou            #+#    #+#             */
-/*   Updated: 2023/02/04 19:36:27 by maddou           ###   ########.fr       */
+/*   Created: 2022/10/24 19:31:32 by maddou            #+#    #+#             */
+/*   Updated: 2023/02/01 11:26:56 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	convert_binaire(int b, char *pid)
+int	ft_print_digit(int nb)
 {
-	int	i;
-	int	j;
-	int	r;
+	long	n;
+	int		cont;
 
-	i = 0;
-	while (i <= 7)
+	cont = 0;
+	n = (long)nb;
+	if (n < 0)
 	{
-		r = b & 1;
-		if (r == 0)
-			kill(ft_atoi(pid), SIGUSR1);
-		else if (r == 1)
-			kill(ft_atoi(pid), SIGUSR2);
-		b = b >> 1;
-		usleep(200);
-		i++;
+		n = n * -1;
+		cont += ft_putchar('-');
 	}
-}
-
-int	main(int argc, char *argv[])
-{
-	int	i;
-	int	b;
-	int	j;
-
-	j = 0;
-	i = 0;
-	if (argc == 3)
+	if (n > 9)
 	{
-		while (argv[2][i] != '\0')
-		{
-			convert_binaire(argv[2][i], argv[1]);
-			i++;
-		}
+		cont += ft_print_digit(n / 10);
+		cont += ft_print_digit(n % 10);
 	}
+	if (n >= 0 && n <= 9)
+		cont += ft_putchar(n + 48);
+	return (cont);
 }

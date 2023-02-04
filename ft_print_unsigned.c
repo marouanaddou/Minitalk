@@ -1,51 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_print_unsigned.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 13:09:35 by maddou            #+#    #+#             */
-/*   Updated: 2023/02/04 19:36:27 by maddou           ###   ########.fr       */
+/*   Created: 2022/10/24 21:51:17 by maddou            #+#    #+#             */
+/*   Updated: 2023/02/01 11:28:31 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	convert_binaire(int b, char *pid)
+int	ft_print_unsigned(unsigned int u)
 {
-	int	i;
-	int	j;
-	int	r;
+	int	cont;
 
-	i = 0;
-	while (i <= 7)
+	cont = 0;
+	if (u > 9)
 	{
-		r = b & 1;
-		if (r == 0)
-			kill(ft_atoi(pid), SIGUSR1);
-		else if (r == 1)
-			kill(ft_atoi(pid), SIGUSR2);
-		b = b >> 1;
-		usleep(200);
-		i++;
+		cont += ft_print_unsigned(u / 10);
+		cont += ft_print_unsigned(u % 10);
 	}
-}
-
-int	main(int argc, char *argv[])
-{
-	int	i;
-	int	b;
-	int	j;
-
-	j = 0;
-	i = 0;
-	if (argc == 3)
-	{
-		while (argv[2][i] != '\0')
-		{
-			convert_binaire(argv[2][i], argv[1]);
-			i++;
-		}
-	}
+	if (u >= 0 && u <= 9)
+		cont += ft_putchar(u + 48);
+	return (cont);
 }
